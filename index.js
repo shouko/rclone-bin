@@ -3,13 +3,9 @@
 const path = require("path");
 
 function getPath() {
-  if (process.platform === "darwin") {
-    return path.join(__dirname, "mac", "rclone");
-  } else if (process.platform === "win32") {
-    return path.join(__dirname, "win", process.arch, "rclone.exe");
-  } else {
-    return path.join(__dirname, "linux", process.arch, "rclone");
-  }
+  const { platform, arch } = process;
+  const fn = platform === 'win32' ? 'rclone.exe' : 'rclone';
+  return path.join(__dirname, platform, arch, fn);
 }
 
 exports.pathRClone = getPath();
